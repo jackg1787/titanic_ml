@@ -3,6 +3,25 @@ import matplotlib.pyplot as plt
 import re
 from sklearn.linear_model import LinearRegression
 import numpy as np
+from sklearn.base import  BaseEstimator, TransformerMixin
+
+
+columns_for_modelling = [
+ 'Pclass',
+ 'Sex',
+ 'SibSp',
+ 'Parch',
+ 'Embarked',
+ 'J_missing_age',
+ 'Age',
+ 'Fare',
+ 'J_title_grouped',
+ 'J_nrelatives',
+ 'J_ticket_prefix',
+ 'J_ticket_location',
+ 'J_cabin_letter',
+ 'J_n_siblings_spouses']
+
 
 
 
@@ -255,6 +274,40 @@ class CorrelationAnalysis:
         return final, prev_rejects
     
     
+class Preprocess(BaseEstimator, TransformerMixin):
+    """pipeline step - used in api"""
     
+    def __init__(self):
+        pass
+    
+    def fit(self, X, y=None):
+        return self
+    
+    def transform(self, X, y=None):
+        X_=  X.copy()
+        X_ = preprocess_data(X_)
+        return X_
+        
+        
+        
+        
+def preprocess_data(data, columns_for_modelling = columns_for_modelling):
+    """steps used in the preprocessing step in the pipeline- used in api"""
+    data['J_missing_age'] = 0
+    data.loc[data['Age'].isnull(), 'J_missing_age'] = 1
+
+    name_df = process_name(data)
+    data['J_title_grouped'] = name_df['J_title_grped']
+    data['J_nrelatives'] = name_df['J_nrelatives']
+
+    ticket_info = process_Ticket(data)
+    data['J_ticket_prefix'] = ticket_info['J_prefix']
+    data['J_ticket_number'] = ticket_info['ticket_number']
+    data['J_ticket_location'] = ticket_info['J_ticket_location']
+
+    data = process_cabin(data)
+    data = process_siblings_spouses(data)
+
+    return data[columns_for_modelling]
     
         

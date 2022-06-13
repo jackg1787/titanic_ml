@@ -3,3 +3,6 @@ xgboost
 scikit-learn
 matplotlib
 numpy
+shap
+uvicorn
+fastapi
