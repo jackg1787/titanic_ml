@@ -36,7 +36,7 @@ use this to install all necessary packages for the code to run.
 This contains the instructions needed to set up the docker image for this project. see below for a brief setup instruction:
 
 1) navigate to the titanic_ml directory, and run docker build --tag titanic-docker .
-2) start the container: docker build --tag titaning-docker .
+2) start the container: docker run -d --name titanic-docker -p 80:80 titanic-docker
 3) there will now be a service running on http://127.0.0.1:80
 4) navigate to http://127.0.0.1/docs - this will show the documentation for the api. 
 5) you can try it out by clicking the post /score dropdown, and then clicking 'try it now'
