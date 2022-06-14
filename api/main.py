@@ -19,6 +19,9 @@ class Item(BaseModel):
     Fare: float
     Cabin: str
     Embarked: str
+        
+    class Config:
+        schema_extra = {"example": {"Pclass": 3, "Name": "Braund, Mr. Owen Harris", "Sex": "male", "Age": 22.0, "SibSp": 1, "Parch": 0, "Ticket": "A/5 21171", "Fare": 7.25, "Cabin": "C34", "Embarked": "S"}}
 
 class ResponseItem(BaseModel):
     probability_of_survival: float
