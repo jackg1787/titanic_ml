@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import pickle
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import sys
 import os
 sys.path.append(os.path.abspath("../src"))
@@ -9,8 +9,8 @@ import pandas as pd
 
 #define what we are expecting to be sent to our api
 class Item(BaseModel):
-    Pclass: int
-    Name: str
+    Pclass: int = Field()
+    Name: str = Field()
     Sex: str
     Age: float
     SibSp: int
